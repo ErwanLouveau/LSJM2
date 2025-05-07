@@ -1,4 +1,4 @@
-logR_llh_lsjm_classicSingle <- function(param,hazard_baseline_01, sharedtype_01,
+logR_llh_lsjm_classicSingle <- function(param,hazard_baseline_01, sharedtype_01, func_sharedtype_01 = NULL,
                                    ord.splines, nb.beta, Zq, nb_pointsGK,
                                    nb.e.a, S, wk, rep_wk, sk_GK, nb.alpha,
                                    Matrices,
@@ -88,6 +88,12 @@ logR_llh_lsjm_classicSingle <- function(param,hazard_baseline_01, sharedtype_01,
   nb_points_integral <- c(S, nb_pointsGK)
   gamma_z0 <- list(gamma_01)
 
+  func_assoc_01_type_int <- 0 # 0 pour linéaire (défaut)
+  if(!is.null(func_sharedtype_01) && func_sharedtype_01 == "quad"){
+    func_assoc_01_type_int <- 1 # 1 pour quadratique
+  }
+
+
   delta1 <- Matrices[["delta1"]];  Z_01 <- Matrices[["Z_01"]]
   Time_T <- Matrices[["Time_T"]];
   st_T <- Matrices[["st_T"]];
@@ -104,7 +110,9 @@ logR_llh_lsjm_classicSingle <- function(param,hazard_baseline_01, sharedtype_01,
     Bs_T0_01 <- Matrices[["Bs_T0_01"]]
 
   ll_glob <- log_llh_lsjm_classicSingle(sharedtype, HB, Gompertz, Weibull,
-                                        nb_points_integral, alpha_y_slope,t(alpha_b_01), alpha_z,
+                                        nb_points_integral,
+                                        func_assoc_01_type_int,
+                                        alpha_y_slope,t(alpha_b_01), alpha_z,
                                         gamma_z0,beta, beta_slope, b_y, b_y_slope,
                                         wk, sigma_epsilon, delta1, Z_01,  X_T,  U_T,
                                         Xslope_T,  Uslope_T,  X_GK_T,  U_GK_T,  Xslope_GK_T,

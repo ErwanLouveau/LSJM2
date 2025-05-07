@@ -56,6 +56,7 @@
 lsjm <- function(Objectlsmm,  survival_type = c('Single', 'CR', 'IDM'),
                  formSurv_01, formSurv_02 = NULL, formSurv_12 = NULL,
                  sharedtype_01, sharedtype_02 = NULL, sharedtype_12 = NULL,
+                 func_sharedtype_01 = NULL, func_sharedtype_02 = NULL, func_sharedtype_12 = NULL,
                  hazardBase_01, hazardBase_02 = NULL, hazardBase_12 = NULL,
                  delta1, delta2 = NULL, Time_T, Time_L = NULL, Time_R = NULL, Time_T0 = NULL,
                  formSlopeFixed = NULL, formSlopeRandom = NULL, index_beta_slope = NULL, index_b_slope = NULL, nb.knots.splines = c(1,1,1),
@@ -113,6 +114,12 @@ lsjm <- function(Objectlsmm,  survival_type = c('Single', 'CR', 'IDM'),
                Time_T = Time_T,
                Time_T0 = Time_T0)
 
+  # Vérification du nouvel argument (simple vérification pour l'instant)
+  if(!is.null(func_sharedtype_01) && func_sharedtype_01 != "quad"){
+    warning("Currently only func_sharedtype_01 = 'quad' is supported. Using linear form.")
+    func_sharedtype_01 <- NULL
+  }
+
 
   if(formVar == 'classic'){
     if(!all(sharedtype_01 %in% c("value", "slope", "random effects"))) stop("The argument of sharedtype_01 must be in c('value', 'slope', 'random effects')")
@@ -121,6 +128,7 @@ lsjm <- function(Objectlsmm,  survival_type = c('Single', 'CR', 'IDM'),
     if(survival_type == 'Single'){
       result <- lsjm_classicSingle(Objectlsmm, Time, deltas, hazardBase_01,  nb.knots.splines,
                                    formSurv_01,   nb_pointsGK, sharedtype_01, formSlopeFixed, formSlopeRandom,
+                                   func_sharedtype_01 = func_sharedtype_01,
                                    index_beta_slope , index_b_slope, timeVar,
                                    S1, S2, binit, nproc , clustertype, maxiter,
                                    print.info, file , epsa , epsb , epsd )

@@ -1,5 +1,6 @@
 lsjm_classicSingle <- function(Objectlsmm, Time, deltas, hazard_baseline_01,  nb.knots.splines,
                            formSurv_01,   nb_pointsGK, sharedtype_01,
+                           func_sharedtype_01 = NULL,
                            formSlopeFixed, formSlopeRandom,
                            index_beta_slope , index_b_slope,timeVar,
                            S1, S2, binit, nproc , clustertype, maxiter,
@@ -226,7 +227,7 @@ lsjm_classicSingle <- function(Objectlsmm, Time, deltas, hazard_baseline_01,  nb
 
   estimation1 <- marqLevAlg(binit, fn = logR_llh_lsjm_classicSingle, minimize = FALSE,
 
-                            hazard_baseline_01 = hazard_baseline_01, sharedtype_01 = sharedtype_01,
+                            hazard_baseline_01 = hazard_baseline_01, sharedtype_01 = sharedtype_01, func_sharedtype_01 = func_sharedtype_01,
                             ord.splines = nb.knots.splines + 2, nb.beta = nb.beta, Zq = Zq, nb_pointsGK = nb_pointsGK,
                             nb.e.a = nb.e.a, S = S1, wk = gaussKronrod()$wk, rep_wk = rep(gaussKronrod()$wk, length(gaussKronrod()$wk)), sk_GK = gaussKronrod()$sk, nb.alpha = nb.alpha,
                             Matrices = Matrices, left_trunc = left_trunc,
@@ -245,7 +246,7 @@ lsjm_classicSingle <- function(Objectlsmm, Time, deltas, hazard_baseline_01,  nb
 
     estimation2 <- marqLevAlg(estimation1$b, fn = logR_llh_lsjm_classicSingle, minimize = FALSE,
 
-                              hazard_baseline_01 = hazard_baseline_01, sharedtype_01 = sharedtype_01,
+                              hazard_baseline_01 = hazard_baseline_01, sharedtype_01 = sharedtype_01, func_sharedtype_01 = func_sharedtype_01,
                               ord.splines = nb.knots.splines + 2, nb.beta = nb.beta, Zq = Zq, nb_pointsGK = nb_pointsGK,
                               nb.e.a = nb.e.a, S = S2, wk = gaussKronrod()$wk, rep_wk = rep(gaussKronrod()$wk, length(gaussKronrod()$wk)), sk_GK = gaussKronrod()$sk, nb.alpha = nb.alpha,
                               Matrices = Matrices, left_trunc = left_trunc,
@@ -375,6 +376,7 @@ lsjm_classicSingle <- function(Objectlsmm, Time, deltas, hazard_baseline_01,  nb
                                   formSurv_01 = formSurv_01,
                                   nb_pointsGK = nb_pointsGK,
                                   sharedtype_01 = sharedtype_01,
+                                  func_sharedtype_01=func_sharedtype_01,
                                   formSlopeFixed = formSlopeFixed,
                                   formSlopeRandom = formSlopeRandom,
                                   index_b_slope = index_b_slope,

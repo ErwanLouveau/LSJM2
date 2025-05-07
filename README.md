@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# LSJM
+# LSJM2
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -15,5 +15,5 @@ You can install the development version of LSJM from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("ErwanLouveau/LSJM")
+devtools::install_github("ErwanLouveau/LSJM2")
 ```

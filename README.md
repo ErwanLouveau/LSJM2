@@ -15,5 +15,5 @@ You can install the development version of LSJM from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("LeonieCourcoul/LSJM")
+devtools::install_github("ErwanLouveau/LSJM")
 ```

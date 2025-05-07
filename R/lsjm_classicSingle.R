@@ -1,5 +1,5 @@
 lsjm_classicSingle <- function(Objectlsmm, Time, deltas, hazard_baseline_01,  nb.knots.splines,
-                           formSurv_01,   nb_pointsGK, sharedtype_01, func_sharedtype_01,
+                           formSurv_01,   nb_pointsGK, sharedtype_01,
                            formSlopeFixed, formSlopeRandom,
                            index_beta_slope , index_b_slope,timeVar,
                            S1, S2, binit, nproc , clustertype, maxiter,
@@ -102,10 +102,6 @@ lsjm_classicSingle <- function(Objectlsmm, Time, deltas, hazard_baseline_01,  nb
   list.long <- data.manag.long(formGroup,formFixed, formRandom,data.long)
   X_base <- list.long$X; U_base <- list.long$U; y.new <- list.long$y.new
   offset <- list.long$offset
-
-  if(("quad" %in% func_sharedtype_01)){
-    y.new=I(y.new^2)
-  }
 
   list.GK_T <- data.GaussKronrod(data.id, a = 0, b = data.id$Time_T, k = nb_pointsGK)
   st_T <- list.GK_T$st

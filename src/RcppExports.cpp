@@ -345,7 +345,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // log_llh_lsjm_classicSingle
-arma::vec log_llh_lsjm_classicSingle(arma::vec sharedtype, List HB, arma::vec Gompertz, arma::vec Weibull, int func_assoc_01_type, arma::vec nb_points_integral, arma::vec alpha_y_slope, arma::vec alpha_b_01, List alpha_z, List gamma, arma::vec beta, arma::vec beta_slope, arma::mat b_y, arma::mat b_y_slope, arma::vec wk, double sigma_epsilon, arma::vec delta1, arma::mat Z_01, arma::mat X_T, arma::mat U_T, arma::mat Xslope_T, arma::mat Uslope_T, arma::mat X_GK_T, arma::mat U_GK_T, arma::mat Xslope_GK_T, arma::mat Uslope_GK_T, arma::mat X_GK_T0, arma::mat U_GK_T0, arma::mat Xslope_GK_T0, arma::mat Uslope_GK_T0, arma::vec Time_T, arma::vec Time_T0, arma::mat st_T, arma::mat st_T0, arma::mat Bs_T0_01, bool left_trunc, arma::mat X_base, arma::mat U_base, arma::vec y_new, int Ind, arma::vec offset, arma::mat B_T_01, arma::mat Bs_T_01);
+arma::vec log_llh_lsjm_classicSingle(arma::vec sharedtype, List HB, arma::vec Gompertz, arma::vec Weibull, arma::vec func_assoc_01_type, arma::vec nb_points_integral, arma::vec alpha_y_slope, arma::vec alpha_b_01, List alpha_z, List gamma, arma::vec beta, arma::vec beta_slope, arma::mat b_y, arma::mat b_y_slope, arma::vec wk, double sigma_epsilon, arma::vec delta1, arma::mat Z_01, arma::mat X_T, arma::mat U_T, arma::mat Xslope_T, arma::mat Uslope_T, arma::mat X_GK_T, arma::mat U_GK_T, arma::mat Xslope_GK_T, arma::mat Uslope_GK_T, arma::mat X_GK_T0, arma::mat U_GK_T0, arma::mat Xslope_GK_T0, arma::mat Uslope_GK_T0, arma::vec Time_T, arma::vec Time_T0, arma::mat st_T, arma::mat st_T0, arma::mat Bs_T0_01, bool left_trunc, arma::mat X_base, arma::mat U_base, arma::vec y_new, int Ind, arma::vec offset, arma::mat B_T_01, arma::mat Bs_T_01);
 RcppExport SEXP _LSJM2_log_llh_lsjm_classicSingle(SEXP sharedtypeSEXP, SEXP HBSEXP, SEXP GompertzSEXP, SEXP WeibullSEXP, SEXP func_assoc_01_typeSEXP, SEXP nb_points_integralSEXP, SEXP alpha_y_slopeSEXP, SEXP alpha_b_01SEXP, SEXP alpha_zSEXP, SEXP gammaSEXP, SEXP betaSEXP, SEXP beta_slopeSEXP, SEXP b_ySEXP, SEXP b_y_slopeSEXP, SEXP wkSEXP, SEXP sigma_epsilonSEXP, SEXP delta1SEXP, SEXP Z_01SEXP, SEXP X_TSEXP, SEXP U_TSEXP, SEXP Xslope_TSEXP, SEXP Uslope_TSEXP, SEXP X_GK_TSEXP, SEXP U_GK_TSEXP, SEXP Xslope_GK_TSEXP, SEXP Uslope_GK_TSEXP, SEXP X_GK_T0SEXP, SEXP U_GK_T0SEXP, SEXP Xslope_GK_T0SEXP, SEXP Uslope_GK_T0SEXP, SEXP Time_TSEXP, SEXP Time_T0SEXP, SEXP st_TSEXP, SEXP st_T0SEXP, SEXP Bs_T0_01SEXP, SEXP left_truncSEXP, SEXP X_baseSEXP, SEXP U_baseSEXP, SEXP y_newSEXP, SEXP IndSEXP, SEXP offsetSEXP, SEXP B_T_01SEXP, SEXP Bs_T_01SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -354,7 +354,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< List >::type HB(HBSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type Gompertz(GompertzSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type Weibull(WeibullSEXP);
-    Rcpp::traits::input_parameter< int >::type func_assoc_01_type(func_assoc_01_typeSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type func_assoc_01_type(func_assoc_01_typeSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type nb_points_integral(nb_points_integralSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type alpha_y_slope(alpha_y_slopeSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type alpha_b_01(alpha_b_01SEXP);

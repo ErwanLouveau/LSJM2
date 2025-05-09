@@ -12,8 +12,8 @@ using namespace std;
 // [[Rcpp::export]]
 
 arma::vec log_llh_lsjm_classicSingle(arma::vec sharedtype, List HB, arma::vec Gompertz, arma::vec Weibull,
-                                     arma::vec func_assoc_01_type,
                                      arma::vec nb_points_integral,
+                                     arma::vec func_assoc_01_type,
                                      arma::vec alpha_y_slope, arma::vec alpha_b_01, List alpha_z, List gamma, arma::vec beta, arma::vec beta_slope,
                                      arma::mat b_y, arma::mat b_y_slope, arma::vec wk, double sigma_epsilon,
                                      arma::vec delta1,  arma::mat Z_01,  arma::mat X_T, arma::mat U_T,

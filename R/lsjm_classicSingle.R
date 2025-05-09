@@ -1,6 +1,6 @@
 lsjm_classicSingle <- function(Objectlsmm, Time, deltas, hazard_baseline_01,  nb.knots.splines,
                            formSurv_01,   nb_pointsGK, sharedtype_01,
-                           func_sharedtype_01 = NULL,
+                           func_sharedtype_01,
                            formSlopeFixed, formSlopeRandom,
                            index_beta_slope , index_b_slope,timeVar,
                            S1, S2, binit, nproc , clustertype, maxiter,

@@ -12,7 +12,7 @@ using namespace std;
 // [[Rcpp::export]]
 
 arma::vec log_llh_lsjm_classicSingle(arma::vec sharedtype, List HB, arma::vec Gompertz, arma::vec Weibull,
-                                     int func_assoc_01_type,
+                                     arma::vec func_assoc_01_type,
                                      arma::vec nb_points_integral,
                                      arma::vec alpha_y_slope, arma::vec alpha_b_01, List alpha_z, List gamma, arma::vec beta, arma::vec beta_slope,
                                      arma::mat b_y, arma::mat b_y_slope, arma::vec wk, double sigma_epsilon,
@@ -28,6 +28,7 @@ arma::vec log_llh_lsjm_classicSingle(arma::vec sharedtype, List HB, arma::vec Go
 
 
   // parameters
+  int func_assoc_01 = func_assoc_01_type[0];
   bool dep_cv_01 = sharedtype[0];
   bool dep_slope_01 = sharedtype[1];
   bool dep_re_01 = sharedtype[2];
@@ -81,7 +82,7 @@ arma::vec log_llh_lsjm_classicSingle(arma::vec sharedtype, List HB, arma::vec Go
       arma::mat U_GK_T_i = U_GK_T.rows((nb_pointsGK*i_provCase1bis),(nb_pointsGK*(i_provCase1bis+1)-1));
       current_GK_T = arma::repmat(beta.t()*X_GK_T_i.t(),S,1)+b_y*U_GK_T_i.t();
 
-      if(func_assoc_01_type == 1){ // Quadratic
+      if(func_assoc_01 == 1){ // Quadratic
         h_01_T_i = h_01_T_i % exp(alpha_y_01 * arma::pow(CV_T, 2)); // % pour element-wise
         survLong_01_T_i = survLong_01_T_i + alpha_y_01 * arma::pow(current_GK_T, 2);
       } else { // Linear (default)
@@ -95,7 +96,7 @@ arma::vec log_llh_lsjm_classicSingle(arma::vec sharedtype, List HB, arma::vec Go
         arma::mat current_GK_T0 = arma::repmat(beta.t()*X_GK_T0_i.t(),S,1)+b_y*U_GK_T0_i.t(); // current_GK_T0 est (S x nb_pointsGK)
 
         // Logique conditionnelle ici aussi
-        if(func_assoc_01_type == 1){ // Quadratic
+        if(func_assoc_01 == 1){ // Quadratic
           survLong_01_T0_i = survLong_01_T0_i + alpha_y_01 * arma::pow(current_GK_T0, 2);
         } else { // Linear (default)
           survLong_01_T0_i = survLong_01_T0_i + alpha_y_01 * current_GK_T0;

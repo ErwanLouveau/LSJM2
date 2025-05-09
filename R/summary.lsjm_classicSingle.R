@@ -272,9 +272,9 @@ summary.lsjm_classicSingle <- function(object,...)
   colnames(e1_surv_tab) <- c("Coeff", "SE", "Wald", "Pvalue")
 
   e1_surv_tab <- round(e1_surv_tab, 4)
-  e1_surv_tab$Pvalue <- ifelse(e1_surv_tab$Pvalue < 0.001, "<0.001", round(e1_surv_tab$Pvalue,3))
+  e1_surv_tab[,4] <- ifelse(e1_surv_tab[,4] < 0.001, "<0.001", round(e1_surv_tab[,4],3))
   e1_bas_tab <- round(e1_bas_tab, 4)
-  e1_bas_tab$Pvalue <- ifelse(e1_bas_tab$Pvalue < 0.001, "<0.001", round(e1_bas_tab$Pvalue,3))
+  e1_bas_tab[,4] <- ifelse(e1_bas_tab[,4] < 0.001, "<0.001", round(e1_bas_tab[,4],3))
 
 
   if(nrow(e1_bas_tab)!=0){

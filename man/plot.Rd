@@ -93,9 +93,9 @@ lsmm_interintra(
 )
 
 \method{plot}{lsmm_classic}(
-  Objectlsmm,
+  object,
   which = "long.fit",
-  ObjectpredictY = NULL,
+  predictObject = NULL,
   break.times = NULL,
   ID.ind = NULL,
   ylim = NULL,
@@ -103,9 +103,9 @@ lsmm_interintra(
 )
 
 \method{plot}{lsmm_covDep}(
-  Objectlsmm,
+  object,
   which = "long.fit",
-  ObjectpredictY = NULL,
+  predictObject = NULL,
   break.times = NULL,
   ID.ind = NULL,
   ylim = NULL,
@@ -113,197 +113,94 @@ lsmm_interintra(
 )
 }
 \arguments{
-\item{which}{a character string indicating the type of plot to produce. For
-\code{hlme} objects, are available "residuals", "postprob","fit". For
-\code{lcmm} and \code{multlcmm} objects, are available "residuals",
-"postprob", "link", "linkfunction", "fit".  For \code{Jointlcmm} objects,
-are avaiable "residuals", "postprob", "link", "linkfunction", "fit",
-"hazard", "baselinerisk", "survival". Default to "residuals"}
+\item{which}{A character indicating which plot must be display,}
 
-\item{break.times}{for \code{which="fit"} only, either a numeric vector
-containing the cuts-off defining the time-intervals or an integer giving the
-number of cut-offs. In the latter case, the cut-offs are placed at the
-quantiles of the observed times distribution.}
+\item{break.times}{A vector of breaking times to create windows if \code{which = 'long.fit'}}
 
-\item{x}{an object inheriting from classes \code{hlme}, \code{lcmm},
-\code{multlcmm} or \code{Jointlcmm}, representing respectively a fitted
-latent class linear mixed model, a more general latent class mixed model or
-a joint latent class model}
+\item{ID.ind}{A vector providing the id of subjects for whom we we wish to trace the individual trajectory.}
 
-\item{var.time}{for \code{which="fit"} only, a character string containing
-the name of the variable that corresponds to time in the longitudinal model.}
+\item{object}{A \code{lsmm} or a \code{lsjm} object}
 
-\item{marg}{for \code{which="fit"} only, a logical indicating the type of
-prediction. If \code{marg=TRUE} (the default), the marginal predictions are
-provided. If \code{marg=FALSE}, the subject-specific predictions are
-provided.}
-
-\item{outcome}{for \code{which="fit"} and \code{multlcmm} objects only, the
-outcome to consider.}
-
-\item{event}{for \code{which="baselinerisk"} or \code{which="hazard"} only,
-an integer corresponding to the numeric code (in the indicator variable) of
-the event for which the baseline risk functions are to be plotted. By
-default, the first event is considered.}
-
-\item{subset}{for \code{which="fit"} only, a subset of the data used to
-estimate the model, defining the data on which the fit is evaluated. By
-default, all the data are used.}
-
-\item{\dots}{other parameters to be passed through to plotting functions.
-This includes graphical parameters described in par function and further arguments
-legend (character or expression
-to appear in the legend. If no legend should be added, \code{"legend"}
-should be NULL. ),
-legend.loc (keyword for the position of the legend from the list
-\code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"},
-\code{"left"}, \code{"topleft"},\code{"top"}, \code{"topright"},
-\code{"right"} and \code{"center"}. By default, the legend is located in
-the top left of the plot. ) and
-add (logical indicating if the curves
-should be added to an existing plot. Default to FALSE.).}
-
-\item{shades}{logical indicating if confidence intervals should be
-represented with shades. Default to FALSE, confidence intervals are
-represented as dotted lines.}
+\item{predictObject}{An object of the \code{predict} function}
 }
 \description{
-This function produces different plots (residuals, goodness-of-fit,
-estimated link functions, estimated baseline risk/survival and posterior
-probabilities distributions) of a fitted object of class hlme, lcmm,
-multlcmm or Jointlcmm.
+This function produces different plots (longitudinal and survival goodness-of-fit,
+individual trajectory) of a fitted object of class \code{lsmm} or \code{lsjm}.
 }
 \details{
-With \code{which="residuals"}, this function provides the marginal residuals
-against the marginal predictions, the subject-specific residuals against the
-subject-specific predictions, a normal QQ-plot with confidence bands for the
-marginal residuals and a normal QQ-plot with confidence bands for the
-subject-specific residuals.
+With \code{which="long.fit"}, this function allows to assess the fit of the longitudinal submodel comparing the mean of marker predictions collected in some windows of times (defined by \code{break.times} or using percentiles) to the mean of the observed measurements and its 95\\% confidence interval.
 
-With \code{which="postprob"}, the function provides the histograms of the
-posterior class-membership probabilities stemmed from a \code{Jointlcmm},
-\code{lcmm}, \code{hlme} or \code{multlcmm} object.
+With \code{which="traj.ind"}, represents the individual trajectory with its prediction interval.
 
-With \code{which="link"} or \code{which="linkfunction"}, the function
-displays the estimated transformation(s) specified in the option \code{link}
-of \code{lcmm} and \code{multlcmm} functions. It corresponds to the
-(non)linear parameterized link estimated between the oberved longitudinal
-outcome and the underlying latent process.
-
-With \code{which="fit"}, the function provides the class-specific weighted
-marginal and subject-specific mean predicted trajectories with time and the
-class-specific weighted mean observed trajectories and their 95\\% confidence
-bounds. The predicted and observed class-specific values are weighted means
-within each time interval; For each observation or prediction (in the
-transformed scale if appropriate), the weights are the class-specific
-(posterior with subject-specific or marginal otherwise) probabilities to
-belong to the latent class.
-
-With \code{which="baselinerisk"} or \code{which="hazard"}, the function
-displays the estimated baseline risk functions for the time-to-event of
-interest in each latent class.
-
-With \code{which="survival"}, the function displays the estimated event-free
-probabilities (survival functions) for the time-to-event of interest in each
-latent class.
+For a \code{lsjm} object only, with \code{which="link"}, the function
+allows to assess the fit of the survival submodel. For each transition, the predicted cumulative hazard function at each event time is computed given the predicted random effects. Then the mean of the predicted cumulative hazard functions are compared with there Nelson-Aalen estimator in the case of a single event or with competing risks. For an illness-death model, the predicted cumulative hazard function for each transition is compared to an illness-death model estimated by penalized likelihood accounting for interval censoring with the \code{SmoothHazard} package
 }
 \examples{
 
-
-###################### fit, residuals and postprob
-
-# estimation of the model
-m<-lcmm(Y~Time*X1,mixture=~Time,random=~Time,classmb=~X2+X3,
-subject='ID',ng=2,data=data_hlme,B=c(0.41,0.55,-0.18,-0.41,
--14.26,-0.34,1.33,13.51,24.65,2.98,1.18,26.26,0.97))
-
-# fit
-plot(m,which="fit",marg=FALSE,var.time="Time",bty="n")
-# residuals plot
-plot(m)
-# postprob plot
-plot(m,which="postprob")
-
-
-###################### fit, linkfunctions
-
-#### Estimation of homogeneous mixed models with different assumed link
-#### functions, a quadratic mean trajectory for the latent process with
-#### independent random intercept, slope and quadratic slope
-#### (comparison of linear, Beta and 3 and 5 splines link functions)
 \dontrun{
+data(threeC)
+threeC$age.visit65 <- (threeC$age.visit-65)/10
+threeC$SBP <- threeC$SBP/10
+threeC <- threeC \%>\% group_by(ID, num.visit) \%>\% mutate(SBPvisit = mean(SBP))
+threeC$age65_CR <- NA
+threeC$age65_CR[which(threeC$dem == 1)] <- (threeC$age.last65[which(threeC$dem == 1)] +threeC$age.first65[which(threeC$dem == 1)])/2
+threeC$age65_CR[which(threeC$dem == 0)] <- threeC$age.final65[which(threeC$dem == 0)]
+threeC$demCR <- threeC$dem
+threeC$deathCR <- NA
+threeC$deathCR[which(threeC$dem == 1)] <- 0
+threeC$deathCR[which(threeC$dem == 0)] <- threeC$death[which(threeC$dem == 0)]
+threeC <- threeC \%>\% group_by(ID) \%>\% filter(age.visit65 <= age65_CR)
 
-# linear link function
-m10<-lcmm(Ydep2~Time+I(Time^2),random=~Time+I(Time^2),subject='ID',ng=1,
-          data=data_lcmm,link="linear",
-          B=c(-0.7454, -0.2031,  0.2715,  0.2916 , 0.6114, -0.0064,  0.0545,
-              0.0128, 25.3795, 2.2371))
 
-# Beta link function
-m11<-lcmm(Ydep2~Time+I(Time^2),random=~Time+I(Time^2),subject='ID',ng=1,
-          data=data_lcmm,link="beta",B=c(-0.9109, -0.0831,  0.5194,  0.1910 ,
-          0.8984, -0.0179, -0.0636,  0.0045,  0.5514, -0.7692,  0.7037,  0.0899))
+threeC_ex1 <- threeC[!duplicated(threeC[, c("ID", "num.visit")]), c("ID", "SBPvisit", "age.visit65", "sex","age0_65", "demCR","deathCR","age65_CR")]
 
-# fit
-par(mfrow=c(2,1),mar=c(4,4,1,1))
-plot(m11,which="fit",var.time="Time",bty="l",ylim=c(-3,0))
-plot(m11,which="fit",var.time="Time",marg=FALSE,bty="l",ylim=c(-3,0))
 
-# I-splines with 3 equidistant nodes
-m12<-lcmm(Ydep2~Time+I(Time^2),random=~Time+I(Time^2),subject='ID',ng=1,
-          data=data_lcmm,link="3-equi-splines",B=c(-0.9272, -0.0753 , 0.5304,
-          0.1950,  0.9260, -0.0204, -0.0739 , 0.0059, -7.8369,  0.9228 ,-1.4689,
-          2.0396,  1.8102))
+# Estimation of a lsmm with time-dependent variability model:
+m2 <- lsmm(formFixed = SBPvisit ~ age.visit65,
+               formRandom = ~ age.visit65,
+               formGroup = ~ ID,
+               timeVar = 'age.visit65',
+               data.long = threeC_ex1,
+               formVar = "cov-dependent",
+               formFixedVar = ~ age.visit65+sex,
+               formRandomVar = ~ age.visit65,
+               correlated_re = FALSE,
+               S1 = 500,
+               S2 = 1000,
+               nproc = 1)
 
-# I-splines with 5 nodes, and interior nodes entered manually
-m13<-lcmm(Ydep2~Time+I(Time^2),random=~Time+I(Time^2),subject='ID',ng=1,
-          data=data_lcmm,link="5-manual-splines",intnodes=c(10,20,25),
-          B=c(-0.9315, -0.0739 , 0.5254 , 0.1933,  0.9418, -0.0206, -0.0776,
-          0.0064, -7.8645, 0.7470,  1.2080,  1.5537 , 1.7558 , 1.3386 , 1.0982))
+# Predictions:
+pred.m2 <- predict(m2, which = c("RE", "Y"))
 
-# Plot of estimated different link functions:
-# (applicable for models that only differ in the "link function" used.
-# Otherwise, the latent process scale is different and a rescaling
-# is necessary)
-plot(m10,which="linkfunction",bty="l")
-plot(m11,which="linkfunction",bty="l",add=TRUE,col=2)
-plot(m12,which="linkfunction",bty="l",add=TRUE,col=3)
-plot(m13,which="linkfunction",bty="l",add=TRUE,col=4)
-legend("topleft",legend=c("linear","beta","3-Isplines","5-Isplines"),
-col=1:4,lty=1,bty='n')
+#Plot:
+plot(m2, which = "traj.fit", predictObject = pred.m2,break.times = (seq(65,95,by = 2.5)-65)/10)
+plot(m2, which = "traj.ind", predictObject = pred.m2,  ID.ind = c(10003,120010))
+
+# Estimation of a lsjm with time-dependent variability model and competing events:
+l2 <- lsjm(Objectlsmm = m2,
+           survival_type = 'CR',
+           formSurv_01 = ~ sex,
+           formSurv_02 = ~ sex,
+           sharedtype_01 = c("value", "variability"),
+           sharedtype_02 = c("value", "variability"),
+           hazardBase_01 = "Weibull",
+           hazardBase_02 = "Weibull",
+           delta1 = ~ demCR,
+           delta2 = ~ deathCR,
+           Time_T0 = ~ age0_65,
+           Time_T = ~ age65_CR,
+           nproc = 5,
+           S1 = 1000,
+           S2 = 2000)
+
+# Predictions:
+pred.l2 <- predict(l2, which = c("RE", "Y", "Cum"))
+
+# Plot:
+plot(l2, which = "traj.fit", predictObject = pred.l2,break.times = (seq(65,95,by = 2.5)-65)/10)
+plot(l2, which = "traj.ind", predictObject = pred.l2, ID.ind = c(10003,120010))
+plot(l2, which = "survival.fit", predictObject = pred.l2)
 }
 
 
-###################### fit, baselinerisk and survival
-\dontrun{
-#### estimation with 3 latent classes (ng=3) - see Jointlcmm
-#### help for details on the model
-m3 <- Jointlcmm(fixed= Ydep1~Time*X1,mixture=~Time,random=~Time,
-classmb=~X3,subject='ID',survival = Surv(Tevent,Event)~ X1+mixture(X2),
-hazard="3-quant-splines",hazardtype="PH",ng=3,data=data_lcmm,
-B=c(0.7576, 0.4095, -0.8232, -0.2737, 0, 0, 0, 0.2838, -0.6338,
-2.6324, 5.3963, -0.0273, 1.3979, 0.8168, -15.041, 10.164, 10.2394,
-11.5109, -2.6219, -0.4553, -0.6055, 1.473, -0.0383, 0.8512, 0.0389,
-0.2624, 1.4982))
-
-# fit
-plot(m3,which="fit",var.time="Time",bty="l")
-plot(m3,which="fit",var.time="Time",marg=FALSE,bty="l",ylim=c(0,15))
-
-
-# Class-specific predicted baseline risk & survival functions in the
-# 3-class model retained (for the reference value of the covariates)
-plot(m3,which="baselinerisk",bty="l")
-plot(m3,which="baselinerisk",ylim=c(0,5),bty="l")
-plot(m3,which="survival",bty="l")
-}
-
-
-}
-\seealso{
-\code{\link{hlme}}, \code{\link{lcmm}}, \code{\link{multlcmm}},
-\code{\link{Jointlcmm}}
-}
-\author{
-Cecile Proust-Lima, Viviane Philipps and Benoit Liquet
 }

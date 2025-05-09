@@ -31,9 +31,9 @@
 
 \method{predict}{lsmm_classic}(object, which = "RE", Objectranef = NULL, data.long = NULL)
 
-\method{predict}{lsmm_covDep}(Objectlsmm, which = "RE", Objectranef = NULL, data.long = NULL)
+\method{predict}{lsmm_covDep}(object, which = "RE", Objectranef = NULL, data.long = NULL)
 
-\method{predict}{lsmm_interintra}(Objectlsmm, which = "RE", Objectranef = NULL, data.long = NULL)
+\method{predict}{lsmm_interintra}(object, which = "RE", Objectranef = NULL, data.long = NULL)
 }
 \arguments{
 \item{which}{A vector of characters to indicate which predictions are computed. "RE" corresponds to the random effects, "Y" to the marker and "Cum" to the cumulative risk function(s) (only in the case of a lsjm object)}
